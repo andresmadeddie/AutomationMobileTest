@@ -30,6 +30,9 @@ public class ProductsScreen extends ProductsScreenBase {
     @FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Menu\"]")
     private ExtendedWebElement hamburgerMenuButtonToGetLeftSideMenu;
 
+    @FindBy(xpath= "//android.view.ViewGroup[@content-desc=\"test-Error message\"]/android.widget.TextView")
+    private ExtendedWebElement usernameAndPasswordDoNotMatch;
+
     public ProductsScreen(WebDriver driver) {
         super(driver);
     }
@@ -56,5 +59,9 @@ public class ProductsScreen extends ProductsScreenBase {
     public CartScreenBase clickCartButton() {
         cartButton.click();
         return initPage(CartScreenBase.class);
+    }
+
+    public boolean isUsernameAndPasswordDoNotMatchPresent() {
+        return usernameAndPasswordDoNotMatch.isElementPresent();
     }
 }

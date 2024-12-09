@@ -10,7 +10,7 @@ public class SauceDemoMobileTest extends AbstractSauceDemoScreenTest {
 
     @Test
     @MethodOwner(owner = "Andres")
-    public void loginTest() {
+    public void AuthorizedLoginTest() {
         String username = R.TESTDATA.get("standard_username");
         String password = R.TESTDATA.get("standard_password");
 
@@ -24,6 +24,61 @@ public class SauceDemoMobileTest extends AbstractSauceDemoScreenTest {
 
     @Test
     @MethodOwner(owner = "Andres")
+    public void UnauthorizedLoginTest() {
+        String username = R.TESTDATA.get("wrong_username");
+        String password = R.TESTDATA.get("wrong_password");
+
+        LoginScreenBase loginScreenBase = initPage(LoginScreenBase.class);
+        Assert.assertTrue(loginScreenBase.isOpened(), "Login screen is not opened");
+        loginScreenBase.typeUsername(username);
+        loginScreenBase.typePassword(password);
+        ProductsScreenBase productsScreenPage = loginScreenBase.clickLoginButton();
+        Assert.assertTrue(productsScreenPage.isUsernameAndPasswordDoNotMatchPresent(), "Unsuccessful " +
+                "login message did not appear");
+    }
+
+    @Test
+    @MethodOwner(owner = "Andres")
+    public void WrongPasswordLoginTest() {
+        String username = R.TESTDATA.get("standard_username");
+        String password = R.TESTDATA.get("wrong_password");
+
+        LoginScreenBase loginScreenBase = initPage(LoginScreenBase.class);
+        Assert.assertTrue(loginScreenBase.isOpened(), "Login screen is not opened");
+        loginScreenBase.typeUsername(username);
+        loginScreenBase.typePassword(password);
+        ProductsScreenBase productsScreenPage = loginScreenBase.clickLoginButton();
+        Assert.assertTrue(productsScreenPage.isUsernameAndPasswordDoNotMatchPresent(), "Unsuccessful " +
+                "login message did not appear");
+    }
+
+    @Test
+    @MethodOwner(owner = "Andres")
+    public void WrongUserLoginTest() {
+        String username = R.TESTDATA.get("wrong_username");
+        String password = R.TESTDATA.get("standard_password");
+
+        LoginScreenBase loginScreenBase = initPage(LoginScreenBase.class);
+        Assert.assertTrue(loginScreenBase.isOpened(), "Login screen is not opened");
+        loginScreenBase.typeUsername(username);
+        loginScreenBase.typePassword(password);
+        ProductsScreenBase productsScreenPage = loginScreenBase.clickLoginButton();
+        Assert.assertTrue(productsScreenPage.isUsernameAndPasswordDoNotMatchPresent(), "Unsuccessful " +
+                "login message did not appear");
+    }
+
+    @Test
+    @MethodOwner(owner = "Andres")
+    public void NoInputLoginTest() {
+        LoginScreenBase loginScreenBase = initPage(LoginScreenBase.class);
+        Assert.assertTrue(loginScreenBase.isOpened(), "Login screen is not opened");
+        ProductsScreenBase productsScreenPage = loginScreenBase.clickLoginButton();
+        Assert.assertTrue(productsScreenPage.isUsernameAndPasswordDoNotMatchPresent(), "Unsuccessful " +
+                "login message did not appear");
+    }
+
+    @Test
+    @MethodOwner(owner = "Andres")
     public void productAddedToTheCartTest() {
         String productTitle = R.TESTDATA.get("second_product_name");
 
@@ -33,11 +88,30 @@ public class SauceDemoMobileTest extends AbstractSauceDemoScreenTest {
         ProductDetailsScreenBase productDetailsScreenBase = productsScreenBase.clickProductTitle(productTitle);
         Assert.assertTrue(productDetailsScreenBase.isOpened(), "Product details screen is not opened");
 
-        productDetailsScreenBase.clickAddToCardButton();
+        productDetailsScreenBase.clickAddToCartButton();
 
         CartScreenBase cartScreenBase = productDetailsScreenBase.clickCartButton();
         Assert.assertTrue(cartScreenBase.isOpened(), "Cart screen is not opened");
         Assert.assertTrue(cartScreenBase.isProductDisplayed(productTitle), "Added product is not in the cart");
+    }
+
+    @Test
+    @MethodOwner(owner = "Andres")
+    public void productAddAndRemoveFromTheCartTest() {
+        String productTitle = R.TESTDATA.get("third_product_name");
+
+        ProductsScreenBase productsScreenBase = mobileAuthUtils.loginStandardUser();
+        Assert.assertTrue(productsScreenBase.isOpened(), "Products screen is not opened");
+
+        ProductDetailsScreenBase productDetailsScreenBase = productsScreenBase.clickProductTitle(productTitle);
+        Assert.assertTrue(productDetailsScreenBase.isOpened(), "Product details screen is not opened");
+
+        productDetailsScreenBase.clickAddToCartButton();
+        Assert.assertTrue(productDetailsScreenBase.isRemoveFromCartButtonPresent(), "Remove button " +
+                "missing after adding product to cart");
+        productDetailsScreenBase.clickRemoveFromCartButton();
+        Assert.assertTrue(productDetailsScreenBase.isAddToCartButtonPresent(), "Add to cart button " +
+                "missing after removing product from cart");
     }
 
     @Test
@@ -67,7 +141,7 @@ public class SauceDemoMobileTest extends AbstractSauceDemoScreenTest {
         ProductDetailsScreenBase productDetailsScreenBase = productsScreenBase.clickProductTitle(productTitle);
         Assert.assertTrue(productDetailsScreenBase.isOpened(), "Product details screen is not opened");
 
-        productDetailsScreenBase.clickAddToCardButton();
+        productDetailsScreenBase.clickAddToCartButton();
 
         CartScreenBase cartScreenBase = productDetailsScreenBase.clickCartButton();
         Assert.assertTrue(cartScreenBase.isOpened(), "Cart screen is not opened");

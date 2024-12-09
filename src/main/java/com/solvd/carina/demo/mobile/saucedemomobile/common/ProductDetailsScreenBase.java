@@ -8,7 +8,13 @@ public abstract class ProductDetailsScreenBase extends AbstractSauceDemoScreenBa
         super(driver);
     }
 
-    public abstract void clickAddToCardButton();
+    public abstract void clickAddToCartButton();
+
+    public abstract void clickRemoveFromCartButton();
+
+    public abstract boolean isAddToCartButtonPresent();
+
+    public abstract boolean isRemoveFromCartButtonPresent();
 
     public abstract CartScreenBase clickCartButton();
 }

@@ -26,6 +26,9 @@ public class ProductDetailsScreen extends ProductDetailsScreenBase {
     @FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Cart\"]")
     private ExtendedWebElement cartButton;
 
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-REMOVE\"]/android.widget.TextView")
+    private ExtendedWebElement removeFromCartButton;
+
     public ProductDetailsScreen(WebDriver driver) {
         super(driver);
     }
@@ -36,9 +39,25 @@ public class ProductDetailsScreen extends ProductDetailsScreenBase {
     }
 
     @Override
-    public void clickAddToCardButton() {
+    public void clickAddToCartButton() {
         swipe(addToCartButton);
         addToCartButton.click();
+    }
+
+    @Override
+    public void clickRemoveFromCartButton() {
+        swipe(removeFromCartButton);
+        removeFromCartButton.click();
+    }
+
+    @Override
+    public boolean isAddToCartButtonPresent() {
+        return isAnyElementPresent(addToCartButton);
+    }
+
+    @Override
+    public boolean isRemoveFromCartButtonPresent() {
+        return isAnyElementPresent(removeFromCartButton);
     }
 
     @Override

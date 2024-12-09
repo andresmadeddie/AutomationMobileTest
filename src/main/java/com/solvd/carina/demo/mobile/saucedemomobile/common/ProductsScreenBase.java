@@ -13,4 +13,6 @@ public abstract class ProductsScreenBase extends AbstractSauceDemoScreenBase {
     public abstract ProductDetailsScreenBase clickProductTitle(String productTitle);
 
     public abstract CartScreenBase clickCartButton();
+
+    public abstract boolean isUsernameAndPasswordDoNotMatchPresent();
 }
