@@ -2,6 +2,7 @@ package com.solvd.carina.demo.mobile.saucedemomobile.android;
 
 import com.solvd.carina.demo.mobile.saucedemomobile.common.CartScreenBase;
 import com.solvd.carina.demo.mobile.saucedemomobile.common.CheckOutYourInformationScreenBase;
+import com.solvd.carina.demo.mobile.saucedemomobile.common.ProductsScreenBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
@@ -25,6 +26,9 @@ public class CartScreen extends CartScreenBase {
     @FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-CHECKOUT\"]")
     private ExtendedWebElement checkOutButton;
 
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-CONTINUE SHOPPING\"]/android.widget.TextView")
+    private ExtendedWebElement continueShoppingButton;
+
     public CartScreen(WebDriver driver) {
         super(driver);
     }
@@ -45,5 +49,11 @@ public class CartScreen extends CartScreenBase {
         swipe(checkOutButton);
         checkOutButton.click();
         return initPage(CheckOutYourInformationScreenBase.class);
+    }
+
+    @Override
+    public ProductsScreenBase clickContinueShopping() {
+        continueShoppingButton.click();
+        return initPage(ProductsScreenBase.class);
     }
 }

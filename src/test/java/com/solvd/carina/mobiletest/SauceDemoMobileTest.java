@@ -129,6 +129,27 @@ public class SauceDemoMobileTest extends AbstractSauceDemoScreenTest {
 
     @Test
     @MethodOwner(owner = "Andres")
+    public void continueShoppingButtonTest() {
+        String productTitle = R.TESTDATA.get("product_name");
+
+        ProductsScreenBase productsScreenBase = mobileAuthUtils.loginStandardUser();
+        Assert.assertTrue(productsScreenBase.isOpened(), "Products screen is not opened");
+
+        ProductDetailsScreenBase productDetailsScreenBase = productsScreenBase.clickProductTitle(productTitle);
+        Assert.assertTrue(productDetailsScreenBase.isOpened(), "Product details screen is not opened");
+
+        productDetailsScreenBase.clickAddToCartButton();
+
+        CartScreenBase cartScreenBase = productDetailsScreenBase.clickCartButton();
+        Assert.assertTrue(cartScreenBase.isOpened(), "Cart screen is not opened");
+        Assert.assertTrue(cartScreenBase.isProductDisplayed(productTitle), "Product is not in the cart");
+
+        cartScreenBase.clickContinueShopping();
+        Assert.assertTrue(productsScreenBase.isOpened(), "Product details screen is not opened");
+    }
+
+    @Test
+    @MethodOwner(owner = "Andres")
     public void checkOutProcessTest() {
         String productTitle = R.TESTDATA.get("second_product_name");
         String firstName = R.TESTDATA.get("first_name");
